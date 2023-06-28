@@ -13,9 +13,12 @@ cestformat = "%B %d, %Y %H:%M:%S.%f"
 
 
 
-BURST_DELAY_TOLERANCE = 250#ms
+BURST_DELAY_TOLERANCE = 250 #ms
 
-
+#there are better ways
+def get_date(in_str : any) -> datetime:
+    print(str(in_str)[:-8])
+    return datetime.strptime(str(in_str)[:-8],cestformat)
 
 
 for file_name in captures:
@@ -27,16 +30,12 @@ for file_name in captures:
     print(len(unique_macs))
 
     #frequenza delle richieste 
-    #python bestiality trigger warning -> date to str to date
-    last_probe_timestamp = str(df.iloc[len(df)-1]["frame.time"])[:-8]
-    first_probe_timestamp = str(df.iloc[0]["frame.time"])[:-8]
-
-    last_date = datetime.strptime(last_probe_timestamp, cestformat)
-    first_Date = datetime.strptime(first_probe_timestamp, cestformat)
-    print(last_date-first_Date)
+    
+    last_date = get_date(df.iloc[len(df)-1]["frame.time"])
+    first_Date = get_date(df.iloc[0]["frame.time"])
 
     seconds = (last_date-first_Date).total_seconds()
-    print(seconds)
+    print("Time elapsed between requests %d" % seconds)
     freq = len(df)/seconds
     print("Probe request frequency is : " + str(freq))
 
@@ -46,11 +45,11 @@ for file_name in captures:
     for mac in unique_macs:
         print("Current MAC : "+ mac)
         same_mac_rows = df[df['wlan.sa'] == mac]
-        min_date = datetime.strptime(str(same_mac_rows['frame.time'].min())[:-8],cestformat)
+        min_date = get_date(same_mac_rows['frame.time'].min())
         ctr = 0
         sum_rssi = 0
         for index,same_mac in same_mac_rows.iterrows():
-            date = datetime.strptime(str(same_mac["frame.time"])[:-8],cestformat)
+            date = get_date(same_mac["frame.time"])
             if (date-min_date).total_seconds()*1000 < BURST_DELAY_TOLERANCE:
                 ctr+=1
                 sum_rssi += same_mac['wlan_radio.signal_dbm']
