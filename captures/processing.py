@@ -14,7 +14,7 @@ cestformat = "%B %d, %Y %H:%M:%S.%f"
 
 
 
-BURST_DELAY_TOLERANCE = 100 #troppi imho
+BURST_DELAY_TOLERANCE_MS = 55 #ms
 
 #there are better ways
 def get_date(in_str : any) -> datetime:
@@ -51,13 +51,15 @@ for file_name in captures:
         ctr = 0
         sum_rssi = 0
         curr_delay_arr = []
+        #changed burst detection to pair-wise
         for index,same_mac in same_mac_rows.iterrows():
             date = get_date(same_mac["frame.time"])
-            if (date-min_date)/timedelta(milliseconds=1) < BURST_DELAY_TOLERANCE:
+            if (date-min_date)/timedelta(milliseconds=1) < BURST_DELAY_TOLERANCE_MS:
                 ctr+=1
                 sum_rssi += same_mac['wlan_radio.signal_dbm']
                 if ctr != 1:
                     curr_delay_arr.append((date-min_date)/timedelta(microseconds=1))
+                min_date = date # pair-wise detection
         if len(curr_delay_arr) > 0:
             delay_between_probes_in_burst.append(curr_delay_arr)
         burst_timestamp.append(min_date)
