@@ -4,6 +4,7 @@ import os
 import pyshark
 import time
 from datetime import datetime
+from datetime import timedelta
 import random
 import matplotlib.pyplot as plt
 
@@ -13,11 +14,10 @@ cestformat = "%B %d, %Y %H:%M:%S.%f"
 
 
 
-BURST_DELAY_TOLERANCE = 250 #ms
+BURST_DELAY_TOLERANCE = 100 #troppi imho
 
 #there are better ways
 def get_date(in_str : any) -> datetime:
-    print(str(in_str)[:-8])
     return datetime.strptime(str(in_str)[:-8],cestformat)
 
 
@@ -42,27 +42,35 @@ for file_name in captures:
     burst_timestamp = []
     burst_rssi = []
     #numero di probe request per burst
+    delay_between_probes_in_burst = []
     for mac in unique_macs:
         print("Current MAC : "+ mac)
+        #iterate over all the macs and try to identify bursts
         same_mac_rows = df[df['wlan.sa'] == mac]
         min_date = get_date(same_mac_rows['frame.time'].min())
         ctr = 0
         sum_rssi = 0
+        curr_delay_arr = []
         for index,same_mac in same_mac_rows.iterrows():
             date = get_date(same_mac["frame.time"])
-            if (date-min_date).total_seconds()*1000 < BURST_DELAY_TOLERANCE:
+            if (date-min_date)/timedelta(milliseconds=1) < BURST_DELAY_TOLERANCE:
                 ctr+=1
                 sum_rssi += same_mac['wlan_radio.signal_dbm']
+                if ctr != 1:
+                    curr_delay_arr.append((date-min_date)/timedelta(microseconds=1))
+        if len(curr_delay_arr) > 0:
+            delay_between_probes_in_burst.append(curr_delay_arr)
         burst_timestamp.append(min_date)
         burst_rssi.append(sum_rssi/ctr)
         print("Current burst [MAC : %s] has %d probe requests" % (mac,ctr))
-
     #plot 
+    print("Delays")
+    print(delay_between_probes_in_burst)
     x_axis = range(len(burst_rssi))
-    plt.plot(x_axis,burst_rssi,label = str(random.randint(0,1000)))
+    plt.plot(x_axis,burst_rssi)
     plt.xlabel("Burst n°")
     plt.ylabel("Average signal strength")
-    plt.title("Average signal strength per burst")
+    plt.title("Average signal strength of the probes per burst")
     plt.show()
 
     sum_interval_btw_bursts = 0
@@ -70,10 +78,10 @@ for file_name in captures:
     print("Sum bursts : " + str(burst_rssi))
 
     for i in range(1,len(burst_timestamp)-1):
-        print(burst_timestamp[i-1])
-        curr_value = (burst_timestamp[i]-burst_timestamp[i-1]).total_seconds()*1000
+        #print(burst_timestamp[i-1])
+        curr_value = (burst_timestamp[i]-burst_timestamp[i-1])/timedelta(milliseconds=1)
         sum_interval_btw_bursts += curr_value
-        print("Burst n° %d #%d [ms]" % (i,curr_value))
+        #print("Burst n° %d #%d [ms]" % (i,curr_value))
 
     print("The average delay between consecutive bursts is %d ms" % (sum_interval_btw_bursts/(len(burst_timestamp)-1)))
     
