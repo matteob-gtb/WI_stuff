@@ -71,16 +71,13 @@ for file_name in captures:
     burst_x_axis = range(len(delay_between_probes_in_burst))
     y_axis = [sum(p)/len(p) for p in delay_between_probes_in_burst]
     plt.plot(burst_x_axis,y_axis,label = file_name)
-    plt.title("Average delay between consecutive probes in a burst [µs]")
     plt.legend(loc='best')
-
-    x_axis = range(len(burst_rssi))
-    plt.figure(0)
-    plt.plot(x_axis,burst_rssi,label = file_name)
     
-    plt.title("Average signal strength of the probes per burst")
+    
+    plt.figure(0)
+    x_axis = range(len(burst_rssi))
+    plt.plot(x_axis,burst_rssi,label = file_name)
     plt.legend(loc='best')
-    #plt.show()
 
     sum_interval_btw_bursts = 0
 
@@ -112,6 +109,13 @@ for file_name in captures:
      #check real mac address -> frequenza MAC address
 
 
+
+plt.figure(1)
+plt.title("Average delay between consecutive probes in a burst [µs]")
+plt.xlabel("Burst n°")
+plt.ylabel("Average delay")
+plt.figure(0)
+plt.title("Average signal strength of the probes per burst")
 plt.xlabel("Burst n°")
 plt.ylabel("Average signal strength")
 plt.show()
