@@ -92,12 +92,16 @@ for file_name in captures:
     sum_interval_btw_bursts = 0
 
     print("Sum bursts : " + str(burst_rssi))
-
+    y_bursts = []
     for i in range(1,len(burst_timestamp)-1):
         curr_value = (burst_timestamp[i]-burst_timestamp[i-1])/timedelta(milliseconds=1)
+        y_bursts.append(curr_value)
         sum_interval_btw_bursts += curr_value
         #print("Burst n° %d #%d [ms]" % (i,curr_value))
-
+    plt.figure(4) # delays between bursts
+    x_bursts = range(1,len(burst_timestamp)-1)
+    plt.plot(x_bursts,y_bursts,label = file_name)
+    plt.legend(loc='best')
     print("The average delay between consecutive bursts is %d ms" % (sum_interval_btw_bursts/(len(burst_timestamp)-1)))
     
 
@@ -118,6 +122,13 @@ for file_name in captures:
  
      #check real mac address -> frequenza MAC address
 
+plt.figure(4) # delays between bursts
+plt.title("Delay between consecutive bursts")
+plt.xlabel("i-th burst")
+plt.ylabel("Delay")
+
+
+
 plt.figure(3) #macs per file
 plt.bar([get_tabular_name(file_name) for file_name in captures],macs_per_file)
 plt.title("Number of of unique MAC addresses per file")
@@ -129,7 +140,7 @@ plt.ylabel("N° of unique MAC addresses")
 plt.figure(2) # probes per file
 plt.bar([get_tabular_name(file_name) for file_name in captures],probes_per_file)
 plt.title("Number of probes per file")
-plt.xlabel("File name")
+plt.xlabel("Bur name")
 plt.ylabel("N° of probes")
 
 plt.figure(1)
