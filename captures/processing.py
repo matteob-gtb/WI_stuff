@@ -66,21 +66,27 @@ for file_name in captures:
         burst_rssi.append(sum_rssi/ctr)
         print("Current burst [MAC : %s] has %d probe requests" % (mac,ctr))
     #plot 
-    print("Delays")
-    print(delay_between_probes_in_burst)
+    #for each burst plot the average delay between probe requests
+    plt.figure(1) # delays figure
+    burst_x_axis = range(len(delay_between_probes_in_burst))
+    y_axis = [sum(p)/len(p) for p in delay_between_probes_in_burst]
+    plt.plot(burst_x_axis,y_axis,label = file_name)
+    plt.title("Average delay between consecutive probes in a burst [µs]")
+    plt.legend(loc='best')
+
     x_axis = range(len(burst_rssi))
-    plt.plot(x_axis,burst_rssi)
-    plt.xlabel("Burst n°")
-    plt.ylabel("Average signal strength")
+    plt.figure(0)
+    plt.plot(x_axis,burst_rssi,label = file_name)
+    
     plt.title("Average signal strength of the probes per burst")
-    plt.show()
+    plt.legend(loc='best')
+    #plt.show()
 
     sum_interval_btw_bursts = 0
 
     print("Sum bursts : " + str(burst_rssi))
 
     for i in range(1,len(burst_timestamp)-1):
-        #print(burst_timestamp[i-1])
         curr_value = (burst_timestamp[i]-burst_timestamp[i-1])/timedelta(milliseconds=1)
         sum_interval_btw_bursts += curr_value
         #print("Burst n° %d #%d [ms]" % (i,curr_value))
@@ -106,5 +112,6 @@ for file_name in captures:
      #check real mac address -> frequenza MAC address
 
 
-
-   # print(df)
+plt.xlabel("Burst n°")
+plt.ylabel("Average signal strength")
+plt.show()
