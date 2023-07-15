@@ -12,6 +12,11 @@ captures = [p for p in os.listdir() if ".csv" in str(p)]
 
 cestformat = "%B %d, %Y %H:%M:%S.%f"
 
+def get_tabular_name(file_name : str) -> str:
+    if "wifi_on_screen_on_pw_off" in file_name: return "A"
+    if "wifi_on_screen_off_pw_off" in file_name : return "S"
+    if "wifi_on_screen_on_pw_on" in file_name : return "PA"
+    if "wifi_on_screen_off_pw_on" in file_name : return "PS"
 
 
 BURST_DELAY_TOLERANCE_MS = 55 #ms
@@ -21,13 +26,19 @@ def get_date(in_str : any) -> datetime:
     return datetime.strptime(str(in_str)[:-8],cestformat)
 
 
+probes_per_file = []
+
 for file_name in captures:
     print("Current file :"  + file_name)
     df = pd.read_csv(file_name)
+    probes_per_file.append(len(df.index))
     #unique MAC address
     unique_macs = pd.unique(df['wlan.sa'])
     print(unique_macs)
     print(len(unique_macs))
+
+    
+
 
     #frequenza delle richieste 
     
@@ -108,12 +119,18 @@ for file_name in captures:
  
      #check real mac address -> frequenza MAC address
 
+plt.figure(2) # probes per file
 
+plt.plot([get_tabular_name(file_name) for file_name in captures],probes_per_file)
+plt.title("Number of probes per file")
+plt.xlabel("File name")
+plt.ylabel("N° of probes")
 
 plt.figure(1)
 plt.title("Average delay between consecutive probes in a burst [µs]")
 plt.xlabel("Burst n°")
 plt.ylabel("Average delay")
+
 plt.figure(0)
 plt.title("Average signal strength of the probes per burst")
 plt.xlabel("Burst n°")
