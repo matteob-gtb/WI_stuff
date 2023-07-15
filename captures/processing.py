@@ -27,6 +27,8 @@ def get_date(in_str : any) -> datetime:
 
 
 probes_per_file = []
+macs_per_file = []
+
 
 for file_name in captures:
     print("Current file :"  + file_name)
@@ -34,10 +36,7 @@ for file_name in captures:
     probes_per_file.append(len(df.index))
     #unique MAC address
     unique_macs = pd.unique(df['wlan.sa'])
-    print(unique_macs)
-    print(len(unique_macs))
-
-    
+    macs_per_file.append(len(unique_macs))
 
 
     #frequenza delle richieste 
@@ -119,9 +118,16 @@ for file_name in captures:
  
      #check real mac address -> frequenza MAC address
 
-plt.figure(2) # probes per file
+plt.figure(3) #macs per file
+plt.bar([get_tabular_name(file_name) for file_name in captures],macs_per_file)
+plt.title("Number of of unique MAC addresses per file")
+plt.xlabel("File name")
+plt.ylabel("N° of unique MAC addresses")
 
-plt.plot([get_tabular_name(file_name) for file_name in captures],probes_per_file)
+
+
+plt.figure(2) # probes per file
+plt.bar([get_tabular_name(file_name) for file_name in captures],probes_per_file)
 plt.title("Number of probes per file")
 plt.xlabel("File name")
 plt.ylabel("N° of probes")
