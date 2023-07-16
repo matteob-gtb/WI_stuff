@@ -8,9 +8,20 @@ from datetime import timedelta
 import random
 import matplotlib.pyplot as plt
 
+
+log_file = open("probe_logs.txt","w")
+
+
+
+
+
 captures = [p for p in os.listdir() if ".csv" in str(p)]
 
 cestformat = "%B %d, %Y %H:%M:%S.%f"
+
+def log(in_str : str):
+    log_file.write(in_str + os.linesep)
+
 
 def get_tabular_name(file_name : str) -> str:
     if "wifi_on_screen_on_pw_off" in file_name: return "A"
@@ -31,7 +42,7 @@ macs_per_file = []
 
 
 for file_name in captures:
-    print("Current file :"  + file_name)
+    log("Current file :"  + file_name)
     df = pd.read_csv(file_name)
     probes_per_file.append(len(df.index))
     #unique MAC address
@@ -44,17 +55,17 @@ for file_name in captures:
     last_date = get_date(df.iloc[len(df)-1]["frame.time"])
     first_Date = get_date(df.iloc[0]["frame.time"])
 
-    seconds = (last_date-first_Date).total_seconds()
-    print("Time elapsed between requests %d" % seconds)
+    seconds = (last_date-first_Date)/timedelta(minutes=1)
+    log("Time elapsed between requests %d" % seconds)
     freq = len(df)/seconds
-    print("Probe request frequency is : " + str(freq))
+    log("Probe request frequency is : " + str(freq) + " req/min")
 
     burst_timestamp = []
     burst_rssi = []
     #numero di probe request per burst
     delay_between_probes_in_burst = []
     for mac in unique_macs:
-        print("Current MAC : "+ mac)
+        log("Current MAC : "+ mac)
         #iterate over all the macs and try to identify bursts
         same_mac_rows = df[df['wlan.sa'] == mac]
         min_date = get_date(same_mac_rows['frame.time'].min())
@@ -74,7 +85,7 @@ for file_name in captures:
             delay_between_probes_in_burst.append(curr_delay_arr)
         burst_timestamp.append(min_date)
         burst_rssi.append(sum_rssi/ctr)
-        print("Current burst [MAC : %s] has %d probe requests" % (mac,ctr))
+        log("Current burst [MAC : %s] has %d probe requests" % (mac,ctr))
     #plot 
     #for each burst plot the average delay between probe requests
     plt.figure(1) # delays figure
@@ -91,18 +102,18 @@ for file_name in captures:
 
     sum_interval_btw_bursts = 0
 
-    print("Sum bursts : " + str(burst_rssi))
+    log("Sum bursts : " + str(burst_rssi))
     y_bursts = []
     for i in range(1,len(burst_timestamp)-1):
         curr_value = (burst_timestamp[i]-burst_timestamp[i-1])/timedelta(milliseconds=1)
-        y_bursts.append(curr_value)
+        y_bursts.append((burst_timestamp[i]-burst_timestamp[i-1])/timedelta(seconds=1))
         sum_interval_btw_bursts += curr_value
-        #print("Burst n° %d #%d [ms]" % (i,curr_value))
+        #log("Burst n° %d #%d [ms]" % (i,curr_value))
     plt.figure(4) # delays between bursts
     x_bursts = range(1,len(burst_timestamp)-1)
     plt.plot(x_bursts,y_bursts,label = file_name)
     plt.legend(loc='best')
-    print("The average delay between consecutive bursts is %d ms" % (sum_interval_btw_bursts/(len(burst_timestamp)-1)))
+    log("The average delay between consecutive bursts is %d ms" % (sum_interval_btw_bursts/(len(burst_timestamp)-1)))
     
 
     #end burst potenza segnale 
@@ -113,19 +124,20 @@ for file_name in captures:
         sum_rssi += row['wlan_radio.signal_dbm']
 
     sum_rssi/=len(df)
-    print("Average signal strenght : %d" % sum_rssi)
+    log("Average signal strenght : %d" % sum_rssi)
 
     real_mac = "64:70:33:22:59:EC"
 
     mac_contained = real_mac in unique_macs
-    print("Real MAC is contained in the probes : " + str(mac_contained))
+    log("Real MAC is contained in the probes : " + str(mac_contained))
  
      #check real mac address -> frequenza MAC address
 
+log_file.close()
 plt.figure(4) # delays between bursts
-plt.title("Delay between consecutive bursts")
+plt.title("Delay between consecutive bursts [s]")
 plt.xlabel("i-th burst")
-plt.ylabel("Delay")
+plt.ylabel("Delay in seconds")
 
 
 
@@ -153,3 +165,5 @@ plt.title("Average signal strength of the probes per burst")
 plt.xlabel("Burst n°")
 plt.ylabel("Average signal strength")
 plt.show()
+
+ 

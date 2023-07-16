@@ -1,0 +1,138 @@
+Current file :wifi_on_screen_off_pw_off.csv
+Time elapsed between requests 22
+Probe request frequency is : 1.8881835804372595 req/min
+Current MAC : e2:38:0a:a1:4e:2d
+Current burst [MAC : e2:38:0a:a1:4e:2d] has 4 probe requests
+Current MAC : 1e:21:ab:77:68:23
+Current burst [MAC : 1e:21:ab:77:68:23] has 2 probe requests
+Current MAC : 4a:b5:24:73:83:1d
+Current burst [MAC : 4a:b5:24:73:83:1d] has 1 probe requests
+Current MAC : 42:bb:48:31:51:0c
+Current burst [MAC : 42:bb:48:31:51:0c] has 5 probe requests
+Current MAC : ae:46:e9:ea:6c:3c
+Current burst [MAC : ae:46:e9:ea:6c:3c] has 1 probe requests
+Current MAC : 6e:a9:2f:5a:cb:b5
+Current burst [MAC : 6e:a9:2f:5a:cb:b5] has 3 probe requests
+Current MAC : d6:f4:ad:82:31:a8
+Current burst [MAC : d6:f4:ad:82:31:a8] has 3 probe requests
+Current MAC : 9a:a5:22:c5:26:ba
+Current burst [MAC : 9a:a5:22:c5:26:ba] has 2 probe requests
+Current MAC : 9e:34:f2:c9:a7:11
+Current burst [MAC : 9e:34:f2:c9:a7:11] has 6 probe requests
+Current MAC : b2:35:44:1e:36:68
+Current burst [MAC : b2:35:44:1e:36:68] has 2 probe requests
+Current MAC : da:49:a4:57:fc:3a
+Current burst [MAC : da:49:a4:57:fc:3a] has 2 probe requests
+Current MAC : 72:4e:c1:39:65:5e
+Current burst [MAC : 72:4e:c1:39:65:5e] has 3 probe requests
+Current MAC : 5e:69:20:eb:af:a3
+Current burst [MAC : 5e:69:20:eb:af:a3] has 3 probe requests
+Sum bursts : [-21.25, -15.5, -12.0, -16.0, -15.0, -26.0, -23.666666666666668, -28.5, -29.5, -24.5, -25.0, -24.333333333333332, -23.666666666666668]
+The average delay between consecutive bursts is 91362 ms
+Average signal strenght : -22
+Real MAC is contained in the probes : False
+Current file :wifi_on_screen_off_pw_on.csv
+Time elapsed between requests 17
+Probe request frequency is : 2.848367889388157 req/min
+Current MAC : f6:71:6d:3c:9c:d7
+Current burst [MAC : f6:71:6d:3c:9c:d7] has 4 probe requests
+Current MAC : 62:d9:5c:fa:27:29
+Current burst [MAC : 62:d9:5c:fa:27:29] has 2 probe requests
+Current MAC : 9e:f3:88:b5:b1:34
+Current burst [MAC : 9e:f3:88:b5:b1:34] has 1 probe requests
+Current MAC : 02:da:0e:34:33:c6
+Current burst [MAC : 02:da:0e:34:33:c6] has 5 probe requests
+Current MAC : 16:15:93:5e:1a:d8
+Current burst [MAC : 16:15:93:5e:1a:d8] has 5 probe requests
+Current MAC : b6:b2:ac:3e:72:f0
+Current burst [MAC : b6:b2:ac:3e:72:f0] has 5 probe requests
+Current MAC : 92:ff:26:d1:32:33
+Current burst [MAC : 92:ff:26:d1:32:33] has 2 probe requests
+Current MAC : 0a:cf:9d:f0:8f:2c
+Current burst [MAC : 0a:cf:9d:f0:8f:2c] has 2 probe requests
+Current MAC : 82:1c:08:8b:38:ae
+Current burst [MAC : 82:1c:08:8b:38:ae] has 4 probe requests
+Current MAC : 96:55:4f:57:f3:37
+Current burst [MAC : 96:55:4f:57:f3:37] has 2 probe requests
+Current MAC : c2:07:d3:de:84:e4
+Current burst [MAC : c2:07:d3:de:84:e4] has 3 probe requests
+Current MAC : 3e:31:79:97:84:77
+Current burst [MAC : 3e:31:79:97:84:77] has 6 probe requests
+Current MAC : 22:ed:b2:07:99:04
+Current burst [MAC : 22:ed:b2:07:99:04] has 2 probe requests
+Current MAC : 6e:2d:e8:a1:9c:d5
+Current burst [MAC : 6e:2d:e8:a1:9c:d5] has 3 probe requests
+Current MAC : 1a:f8:18:e2:cc:bb
+Current burst [MAC : 1a:f8:18:e2:cc:bb] has 2 probe requests
+Sum bursts : [-24.25, -25.0, -12.0, -13.2, -13.0, -12.6, -12.0, -17.5, -19.25, -19.0, -19.333333333333332, -19.666666666666668, -12.0, -12.666666666666666, -18.0]
+The average delay between consecutive bursts is 57517 ms
+Average signal strenght : -16
+Real MAC is contained in the probes : False
+Current file :wifi_on_screen_on_pw_off.csv
+Time elapsed between requests 20
+Probe request frequency is : 1.235085942022576 req/min
+Current MAC : 86:89:51:4e:df:3f
+Current burst [MAC : 86:89:51:4e:df:3f] has 3 probe requests
+Current MAC : 46:cf:01:fd:35:98
+Current burst [MAC : 46:cf:01:fd:35:98] has 1 probe requests
+Current MAC : be:cc:c3:30:99:a9
+Current burst [MAC : be:cc:c3:30:99:a9] has 2 probe requests
+Current MAC : ea:2b:91:20:f9:5e
+Current burst [MAC : ea:2b:91:20:f9:5e] has 1 probe requests
+Current MAC : 16:15:f3:d0:6f:f1
+Current burst [MAC : 16:15:f3:d0:6f:f1] has 2 probe requests
+Current MAC : 46:35:25:0f:09:42
+Current burst [MAC : 46:35:25:0f:09:42] has 1 probe requests
+Current MAC : 3a:c5:f6:b1:55:48
+Current burst [MAC : 3a:c5:f6:b1:55:48] has 2 probe requests
+Current MAC : a2:d4:86:5c:6c:71
+Current burst [MAC : a2:d4:86:5c:6c:71] has 2 probe requests
+Current MAC : 8a:65:94:ab:d4:97
+Current burst [MAC : 8a:65:94:ab:d4:97] has 1 probe requests
+Current MAC : 62:4a:75:c5:79:36
+Current burst [MAC : 62:4a:75:c5:79:36] has 2 probe requests
+Current MAC : 2e:a6:68:7b:ed:eb
+Current burst [MAC : 2e:a6:68:7b:ed:eb] has 2 probe requests
+Sum bursts : [-26.0, -10.0, -10.0, -10.0, -10.5, -11.0, -11.5, -10.5, -12.0, -12.5, -12.0]
+The average delay between consecutive bursts is 94443 ms
+Average signal strenght : -12
+Real MAC is contained in the probes : False
+Current file :wifi_on_screen_on_pw_on.csv
+Time elapsed between requests 19
+Probe request frequency is : 2.164441349285858 req/min
+Current MAC : 1e:10:60:4c:62:c8
+Current burst [MAC : 1e:10:60:4c:62:c8] has 3 probe requests
+Current MAC : f2:7a:57:fe:a9:c1
+Current burst [MAC : f2:7a:57:fe:a9:c1] has 1 probe requests
+Current MAC : c6:54:71:9b:9c:63
+Current burst [MAC : c6:54:71:9b:9c:63] has 2 probe requests
+Current MAC : 22:81:44:ea:7d:b5
+Current burst [MAC : 22:81:44:ea:7d:b5] has 2 probe requests
+Current MAC : 8a:76:95:26:2f:f7
+Current burst [MAC : 8a:76:95:26:2f:f7] has 1 probe requests
+Current MAC : ae:42:d1:68:da:de
+Current burst [MAC : ae:42:d1:68:da:de] has 4 probe requests
+Current MAC : f6:ab:e6:64:eb:08
+Current burst [MAC : f6:ab:e6:64:eb:08] has 2 probe requests
+Current MAC : 46:7e:8f:0e:b3:b8
+Current burst [MAC : 46:7e:8f:0e:b3:b8] has 2 probe requests
+Current MAC : 06:69:d3:62:3b:d8
+Current burst [MAC : 06:69:d3:62:3b:d8] has 1 probe requests
+Current MAC : 6a:26:63:08:67:ca
+Current burst [MAC : 6a:26:63:08:67:ca] has 3 probe requests
+Current MAC : 1a:5e:a6:41:27:00
+Current burst [MAC : 1a:5e:a6:41:27:00] has 1 probe requests
+Current MAC : 62:df:4f:df:4e:87
+Current burst [MAC : 62:df:4f:df:4e:87] has 1 probe requests
+Current MAC : e2:ba:86:29:25:03
+Current burst [MAC : e2:ba:86:29:25:03] has 3 probe requests
+Current MAC : 9e:bb:c2:09:5a:c2
+Current burst [MAC : 9e:bb:c2:09:5a:c2] has 1 probe requests
+Current MAC : 9a:92:7e:c0:78:b6
+Current burst [MAC : 9a:92:7e:c0:78:b6] has 4 probe requests
+Current MAC : 0a:e4:f0:63:cf:91
+Current burst [MAC : 0a:e4:f0:63:cf:91] has 1 probe requests
+Sum bursts : [-11.666666666666666, -16.0, -11.0, -10.0, -10.0, -18.0, -16.5, -11.5, -16.0, -17.666666666666668, -18.0, -17.0, -18.333333333333332, -17.0, -17.75, -10.0]
+The average delay between consecutive bursts is 77988 ms
+Average signal strenght : -15
+Real MAC is contained in the probes : False
