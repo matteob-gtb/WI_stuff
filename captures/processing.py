@@ -1,11 +1,8 @@
 import numpy
 import pandas as pd
-import os
-import pyshark
-import time
+import os 
 from datetime import datetime
-from datetime import timedelta
-import random
+from datetime import timedelta 
 import matplotlib.pyplot as plt
 
 
@@ -41,6 +38,8 @@ probes_per_file = []
 macs_per_file = []
 
 
+random_bit_set = 0
+
 for file_name in captures:
     log("Current file :"  + file_name)
     df = pd.read_csv(file_name)
@@ -65,6 +64,7 @@ for file_name in captures:
     #numero di probe request per burst
     delay_between_probes_in_burst = []
     for mac in unique_macs:
+        if(int(mac[0:2],16) & 0x10 != 0) : random_bit_set += 1
         log("Current MAC : "+ mac)
         #iterate over all the macs and try to identify bursts
         same_mac_rows = df[df['wlan.sa'] == mac]
@@ -132,6 +132,10 @@ for file_name in captures:
     log("Real MAC is contained in the probes : " + str(mac_contained))
  
      #check real mac address -> frequenza MAC address
+
+
+print("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_set,round(random_bit_set/sum(macs_per_file),2)*100))
+
 
 log_file.close()
 plt.figure(4) # delays between bursts
