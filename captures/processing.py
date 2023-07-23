@@ -5,16 +5,12 @@ from datetime import datetime
 from datetime import timedelta 
 import matplotlib.pyplot as plt
 
-
-log_file = open("probe_logs.txt","w")
-
+cestformat = "%B %d, %Y %H:%M:%S.%f"
 
 
-
+log_file = open("probe_logs_output.txt","w")
 
 captures = [p for p in os.listdir() if ".csv" in str(p)]
-
-cestformat = "%B %d, %Y %H:%M:%S.%f"
 
 def log(in_str : str):
     log_file.write(in_str + os.linesep)
@@ -34,19 +30,30 @@ def get_date(in_str : any) -> datetime:
     return datetime.strptime(str(in_str)[:-8],cestformat)
 
 
-probes_per_file = []
+number_of_probes_per_file = []
 macs_per_file = []
-
 
 random_bit_set = 0
 
 for file_name in captures:
     log("Current file :"  + file_name)
     df = pd.read_csv(file_name)
-    probes_per_file.append(len(df.index))
+    number_of_probes_per_file.append(len(df.index))
     #unique MAC address
     unique_macs = pd.unique(df['wlan.sa'])
-    macs_per_file.append(len(unique_macs))
+    macs_per_file.append(len(unique_macs)) 
+
+    signal_strenghts = [row['wlan_radio.signal_dbm'] for (i,row) in df.iterrows()]
+    
+    plt.figure(5) # signal-strength of each probe
+    x_axis_5 = range(len(signal_strenghts))
+    plt.plot(x_axis_5,signal_strenghts,label = file_name)
+    plt.title("Signal Strength of probes over time")
+    plt.xlabel("Probe request n°")
+    plt.ylabel("Signal strength [dBm]")
+    plt.legend(loc='best')
+
+
 
 
     #frequenza delle richieste 
@@ -63,8 +70,11 @@ for file_name in captures:
     burst_rssi = []
     #numero di probe request per burst
     delay_between_probes_in_burst = []
+
+    non_averaged_signal_strenght_arr = []
+
     for mac in unique_macs:
-        if(int(mac[0:2],16) & 0x10 != 0) : random_bit_set += 1
+        if(int(mac[0:2],16) & 0b10) : random_bit_set += 1
         log("Current MAC : "+ mac)
         #iterate over all the macs and try to identify bursts
         same_mac_rows = df[df['wlan.sa'] == mac]
@@ -72,7 +82,7 @@ for file_name in captures:
         ctr = 0
         sum_rssi = 0
         curr_delay_arr = []
-        #changed burst detection to pair-wise
+        #burst detection to pair-wise
         for index,same_mac in same_mac_rows.iterrows():
             date = get_date(same_mac["frame.time"])
             if (date-min_date)/timedelta(milliseconds=1) < BURST_DELAY_TOLERANCE_MS:
@@ -133,6 +143,7 @@ for file_name in captures:
  
      #check real mac address -> frequenza MAC address
 
+log("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_set,round(random_bit_set/sum(macs_per_file),2)*100))
 
 print("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_set,round(random_bit_set/sum(macs_per_file),2)*100))
 
@@ -154,7 +165,7 @@ plt.ylabel("N° of unique MAC addresses")
 
 
 plt.figure(2) # probes per file
-plt.bar([get_tabular_name(file_name) for file_name in captures],probes_per_file)
+plt.bar([get_tabular_name(file_name) for file_name in captures],number_of_probes_per_file)
 plt.title("Number of probes per file")
 plt.xlabel("Bur name")
 plt.ylabel("N° of probes")

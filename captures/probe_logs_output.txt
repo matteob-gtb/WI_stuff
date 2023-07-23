@@ -136,3 +136,4 @@ Sum bursts : [-26.0, -10.0, -10.0, -10.0, -10.5, -11.0, -11.5, -10.5, -12.0, -12
 The average delay between consecutive bursts is 94443 ms
 Average signal strenght : -12
 Real MAC is contained in the probes : False
+55 MAC addresses had their Local Bit Set, 100.0 % of total
