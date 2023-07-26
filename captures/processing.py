@@ -149,6 +149,7 @@ print("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_s
 
 
 log_file.close()
+
 plt.figure(4) # delays between bursts
 plt.title("Delay between consecutive bursts [s]")
 plt.xlabel("i-th burst")
