@@ -12,11 +12,14 @@ log_file = open("probe_logs_output.txt","w")
 
 captures = [p for p in os.listdir() if ".csv" in str(p)]
 
+
+
 def log(in_str : str):
     log_file.write(in_str + os.linesep)
 
 
 def get_tabular_name(file_name : str) -> str:
+    if "wifi_on_screen_on_pw_off_aps_nearby" in file_name : return "XA"
     if "wifi_on_screen_on_pw_off" in file_name: return "A"
     if "wifi_on_screen_off_pw_off" in file_name : return "S"
     if "wifi_on_screen_on_pw_on" in file_name : return "PA"
@@ -30,6 +33,8 @@ def get_date(in_str : any) -> datetime:
     return datetime.strptime(str(in_str)[:-8],cestformat)
 
 
+
+number_of_null_ssids = 0
 number_of_probes_per_file = []
 macs_per_file = []
 
@@ -45,6 +50,9 @@ for file_name in captures:
 
     signal_strenghts = [row['wlan_radio.signal_dbm'] for (i,row) in df.iterrows()]
     
+    number_of_null_ssids += len(df[df['wlan.ssid'] == "<MISSING>"])
+
+
     plt.figure(5) # signal-strength of each probe
     x_axis_5 = range(len(signal_strenghts))
     plt.plot(x_axis_5,signal_strenghts,label = file_name)
@@ -147,6 +155,9 @@ log("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_set
 
 print("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_set,round(random_bit_set/sum(macs_per_file),2)*100))
 
+log("%d probes had a null SSID entry, %s %% of all the probes" % (number_of_null_ssids,round(number_of_null_ssids/sum(number_of_probes_per_file),2)*100))
+
+print("%d probes had a null SSID entry, %s %% of all the probes" % (number_of_null_ssids,round(number_of_null_ssids/sum(number_of_probes_per_file),2)*100))
 
 log_file.close()
 
@@ -168,7 +179,7 @@ plt.ylabel("N° of unique MAC addresses")
 plt.figure(2) # probes per file
 plt.bar([get_tabular_name(file_name) for file_name in captures],number_of_probes_per_file)
 plt.title("Number of probes per file")
-plt.xlabel("Bur name")
+plt.xlabel("Tabular name")
 plt.ylabel("N° of probes")
 
 plt.figure(1)
