@@ -41,7 +41,7 @@ macs_per_file = []
 random_bit_set = 0
 
 for file_name in captures:
-    log("Current file :"  + file_name)
+    log("Current file :"  + file_name +  " -> " + get_tabular_name(file_name))
     df = pd.read_csv(file_name)
     number_of_probes_per_file.append(len(df.index))
     #unique MAC address
