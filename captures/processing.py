@@ -176,15 +176,7 @@ plt.ylabel("Delay in seconds")
 plt.legend(loc='best')
 
  
-plt.figure(6) #number of probes per each file 
-files = iter(captures)
-for bursts_per_file in bursts_n_per_file:
-    plt.scatter(range(len(bursts_per_file)),bursts_per_file,label = next(files),l)
-plt.xlabel("Burst number #")
-plt.ylabel("N° of probes in each burst")
-plt.legend(loc='best')
 
-plt.show()
 
 
 plt.bar(names,macs_per_file)
@@ -220,4 +212,11 @@ plt.xlabel("Burst n°")
 plt.ylabel("Average signal strength")
 plt.show()
 
- 
+plt.figure(6) #number of probes per each file 
+files = iter(captures)
+for bursts_per_file in bursts_n_per_file:
+    plt.scatter(range(len(bursts_per_file)),bursts_per_file,label = next(files))
+plt.xlabel("Burst number #")
+plt.ylabel("N° of probes in each burst")
+plt.legend(loc='best')
+plt.show()
