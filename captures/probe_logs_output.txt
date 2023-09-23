@@ -1,4 +1,25 @@
-Current file :wifi_on_screen_off_pw_on.csv
+Current file :wifi_on_screen_on_pw_off_aps_nearby.csv -> XA
+Time elapsed between requests 15
+Probe request frequency is : 0.9605985476742578 req/min
+Current MAC : da:bd:c2:21:39:e6
+Current burst [MAC : da:bd:c2:21:39:e6] has 3 probe requests
+Current MAC : 9a:b2:67:5f:f9:82
+Current burst [MAC : 9a:b2:67:5f:f9:82] has 1 probe requests
+Current MAC : 96:53:2a:74:a6:31
+Current burst [MAC : 96:53:2a:74:a6:31] has 2 probe requests
+Current MAC : ca:b7:a0:5d:82:d9
+Current burst [MAC : ca:b7:a0:5d:82:d9] has 1 probe requests
+Current MAC : 7a:79:b1:25:c7:eb
+Current burst [MAC : 7a:79:b1:25:c7:eb] has 2 probe requests
+Current MAC : 6e:9f:e1:64:59:75
+Current burst [MAC : 6e:9f:e1:64:59:75] has 4 probe requests
+Current MAC : aa:dd:e2:03:d5:f8
+Current burst [MAC : aa:dd:e2:03:d5:f8] has 2 probe requests
+Sum bursts : [-10.333333333333334, -11.0, -10.5, -14.0, -12.5, -13.5, -12.0]
+The average delay between consecutive bursts is 148501 ms
+Average signal strenght : -12
+Real MAC is contained in the probes : False
+Current file :wifi_on_screen_off_pw_on.csv -> PS
 Time elapsed between requests 17
 Probe request frequency is : 2.848367889388157 req/min
 Current MAC : f6:71:6d:3c:9c:d7
@@ -35,7 +56,7 @@ Sum bursts : [-24.25, -25.0, -12.0, -13.2, -13.0, -12.6, -12.0, -17.5, -19.25, -
 The average delay between consecutive bursts is 57517 ms
 Average signal strenght : -16
 Real MAC is contained in the probes : False
-Current file :wifi_on_screen_off_pw_off.csv
+Current file :wifi_on_screen_off_pw_off.csv -> S
 Time elapsed between requests 22
 Probe request frequency is : 1.8881835804372595 req/min
 Current MAC : e2:38:0a:a1:4e:2d
@@ -68,7 +89,7 @@ Sum bursts : [-21.25, -15.5, -12.0, -16.0, -15.0, -26.0, -23.666666666666668, -2
 The average delay between consecutive bursts is 91362 ms
 Average signal strenght : -22
 Real MAC is contained in the probes : False
-Current file :wifi_on_screen_on_pw_on.csv
+Current file :wifi_on_screen_on_pw_on.csv -> PA
 Time elapsed between requests 19
 Probe request frequency is : 2.164441349285858 req/min
 Current MAC : 1e:10:60:4c:62:c8
@@ -107,7 +128,7 @@ Sum bursts : [-11.666666666666666, -16.0, -11.0, -10.0, -10.0, -18.0, -16.5, -11
 The average delay between consecutive bursts is 77988 ms
 Average signal strenght : -15
 Real MAC is contained in the probes : False
-Current file :wifi_on_screen_on_pw_off.csv
+Current file :wifi_on_screen_on_pw_off.csv -> A
 Time elapsed between requests 20
 Probe request frequency is : 1.235085942022576 req/min
 Current MAC : 86:89:51:4e:df:3f
@@ -136,4 +157,5 @@ Sum bursts : [-26.0, -10.0, -10.0, -10.0, -10.5, -11.0, -11.5, -10.5, -12.0, -12
 The average delay between consecutive bursts is 94443 ms
 Average signal strenght : -12
 Real MAC is contained in the probes : False
-55 MAC addresses had their Local Bit Set, 100.0 % of total
+62 MAC addresses had their Local Bit Set, 100.0 % of total
+177 probes had a null SSID entry, 100.0 % of all the probes

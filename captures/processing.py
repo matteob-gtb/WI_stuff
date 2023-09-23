@@ -7,16 +7,21 @@ import matplotlib.pyplot as plt
 
 cestformat = "%B %d, %Y %H:%M:%S.%f"
 
+real_device_MAC = "64:70:33:22:59:EC"
+
 
 log_file = open("probe_logs_output.txt","w")
 
 captures = [p for p in os.listdir() if ".csv" in str(p)]
+
+
 
 def log(in_str : str):
     log_file.write(in_str + os.linesep)
 
 
 def get_tabular_name(file_name : str) -> str:
+    if "wifi_on_screen_on_pw_off_aps_nearby" in file_name : return "XA"
     if "wifi_on_screen_on_pw_off" in file_name: return "A"
     if "wifi_on_screen_off_pw_off" in file_name : return "S"
     if "wifi_on_screen_on_pw_on" in file_name : return "PA"
@@ -30,13 +35,17 @@ def get_date(in_str : any) -> datetime:
     return datetime.strptime(str(in_str)[:-8],cestformat)
 
 
+
+number_of_null_ssids = 0
 number_of_probes_per_file = []
 macs_per_file = []
+bursts_n_per_file = []
+
 
 random_bit_set = 0
 
 for file_name in captures:
-    log("Current file :"  + file_name)
+    log("Current file :"  + file_name +  " -> " + get_tabular_name(file_name))
     df = pd.read_csv(file_name)
     number_of_probes_per_file.append(len(df.index))
     #unique MAC address
@@ -45,6 +54,9 @@ for file_name in captures:
 
     signal_strenghts = [row['wlan_radio.signal_dbm'] for (i,row) in df.iterrows()]
     
+    number_of_null_ssids += len(df[df['wlan.ssid'] == "<MISSING>"])
+
+
     plt.figure(5) # signal-strength of each probe
     x_axis_5 = range(len(signal_strenghts))
     plt.plot(x_axis_5,signal_strenghts,label = file_name)
@@ -70,7 +82,7 @@ for file_name in captures:
     burst_rssi = []
     #numero di probe request per burst
     delay_between_probes_in_burst = []
-
+    number_of_probes_per_burst = []
     non_averaged_signal_strenght_arr = []
 
     for mac in unique_macs:
@@ -90,12 +102,15 @@ for file_name in captures:
                 sum_rssi += same_mac['wlan_radio.signal_dbm']
                 if ctr != 1:
                     curr_delay_arr.append((date-min_date)/timedelta(microseconds=1))
-                min_date = date # pair-wise detection
+                min_date = date # pair-wise detection 
         if len(curr_delay_arr) > 0:
-            delay_between_probes_in_burst.append(curr_delay_arr)
+            delay_between_probes_in_burst.append(curr_delay_arr) 
+            number_of_probes_per_burst.append(ctr)
         burst_timestamp.append(min_date)
         burst_rssi.append(sum_rssi/ctr)
         log("Current burst [MAC : %s] has %d probe requests" % (mac,ctr))
+    
+    bursts_n_per_file.append(number_of_probes_per_burst)
     #plot 
     #for each burst plot the average delay between probe requests
     plt.figure(1) # delays figure
@@ -136,29 +151,44 @@ for file_name in captures:
     sum_rssi/=len(df)
     log("Average signal strenght : %d" % sum_rssi)
 
-    real_mac = "64:70:33:22:59:EC"
-
-    mac_contained = real_mac in unique_macs
+    mac_contained = real_device_MAC in unique_macs
     log("Real MAC is contained in the probes : " + str(mac_contained))
  
-     #check real mac address -> frequenza MAC address
+    #check real mac address
 
 log("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_set,round(random_bit_set/sum(macs_per_file),2)*100))
 
 print("%d MAC addresses had their Local Bit Set, %s %% of total" % (random_bit_set,round(random_bit_set/sum(macs_per_file),2)*100))
 
+log("%d probes had a null SSID entry, %s %% of all the probes" % (number_of_null_ssids,round(number_of_null_ssids/sum(number_of_probes_per_file),2)*100))
+
+print("%d probes had a null SSID entry, %s %% of all the probes" % (number_of_null_ssids,round(number_of_null_ssids/sum(number_of_probes_per_file),2)*100))
 
 log_file.close()
+
+
+names = [get_tabular_name(file_name) for file_name in captures]
 
 plt.figure(4) # delays between bursts
 plt.title("Delay between consecutive bursts [s]")
 plt.xlabel("i-th burst")
 plt.ylabel("Delay in seconds")
+plt.legend(loc='best')
+
+ 
+
+
+
+plt.bar(names,macs_per_file)
+plt.title("Number of of unique MAC addresses per file")
+plt.xlabel("File name")
+plt.ylabel("N° of unique MAC addresses")
+
 
 
 
 plt.figure(3) #macs per file
-plt.bar([get_tabular_name(file_name) for file_name in captures],macs_per_file)
+plt.bar(names,macs_per_file)
 plt.title("Number of of unique MAC addresses per file")
 plt.xlabel("File name")
 plt.ylabel("N° of unique MAC addresses")
@@ -166,9 +196,9 @@ plt.ylabel("N° of unique MAC addresses")
 
 
 plt.figure(2) # probes per file
-plt.bar([get_tabular_name(file_name) for file_name in captures],number_of_probes_per_file)
+plt.bar(names,number_of_probes_per_file)
 plt.title("Number of probes per file")
-plt.xlabel("Bur name")
+plt.xlabel("Tabular name")
 plt.ylabel("N° of probes")
 
 plt.figure(1)
@@ -182,4 +212,11 @@ plt.xlabel("Burst n°")
 plt.ylabel("Average signal strength")
 plt.show()
 
- 
+plt.figure(6) #number of probes per each file 
+files = iter(captures)
+for bursts_per_file in bursts_n_per_file:
+    plt.scatter(range(len(bursts_per_file)),bursts_per_file,label = next(files))
+plt.xlabel("Burst number #")
+plt.ylabel("N° of probes in each burst")
+plt.legend(loc='best')
+plt.show()
